@@ -30,4 +30,21 @@
     (with-slots (name votes) object
       (format stream "name: ~s with ~d votes" name votes))))
 
+(defmacro standard-page ((&key title) &body body) `(cl-who:with-html-output-to-string
+     (*standard-output* nil :prologue t :indent t)
+       (:html :lang "en"
+         (:head
+           (:meta :charset "utf-8")
+           (:title ,title)
+           (:link :type "text/css"
+                  :rel "stylesheet"
+                  :href "/retro.css"))
+(:body
+(:div :id "header" ; Retro games header
+              (:img :src "/logo.jpg"
+                    :alt "Commodore 64"
+                    :class "logo")
+              (:span :class "strapline"
+                     "Vote on your favourite Retro Game"))
+           ,@body))))
 
