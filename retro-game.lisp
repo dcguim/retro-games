@@ -39,9 +39,9 @@
            (:link :type "text/css"
                   :rel "stylesheet"
                   :href "/retro.css"))
-(:body
+	 (:body
 (:div :id "header" ; Retro games header
-              (:img :src "/Commodore64.jpg"
+      (:img :src "./img/logo.jpg"
                     :alt "Commodore 64"
                     :class "logo")
               (:span :class "strapline"
@@ -51,19 +51,3 @@
 
 (defun start-server (port)
 	 (hunchentoot:start (make-instance hunchentoot::'easy-acceptor :port port)))
-
- (hunchentoot:define-easy-handler (retro-games :uri "/retro-games") ()
-	  (standard-page
-	      (:title "Top Retro Games")
-	    (:h1 "Vote on your all time favourite retro games!")
-	    (:p "Missing a game? Make it available for votes "
-		(:a :href "new-game" "here"))
-	    (:h2 "Current stand")
-	    (:div :id "chart" 
-		  (:ol
-		   (dolist (game (games))
-		     (cl-who:htm
-		      (:li (:a :href (format nil "vote?name=~a"
-					     (hunchentoot:url-encode (game-name game))) "Vote!")
-			   (cl-who:fmt "~A with ~d votes" (cl-who:escape-string (game-name game))
-				       (game-votes game)))))))))
